@@ -1,4 +1,4 @@
-package com.example.srain.teachernote;
+package com.example.srain.teachernote.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+
+import com.example.srain.teachernote.R;
 
 /**
  * Project: TeacherNote
@@ -36,6 +38,7 @@ public class AddTeachClassDialogFragment extends DialogFragment {
         if (addTeachClassDialogFragment == null) {
             addTeachClassDialogFragment = new AddTeachClassDialogFragment();
         }
+        // 工厂方法传递参数的方法
         Bundle bundle = new Bundle();
         bundle.putString("name", "sss");
         addTeachClassDialogFragment.setArguments(bundle);
@@ -58,7 +61,7 @@ public class AddTeachClassDialogFragment extends DialogFragment {
         add_name = view.findViewById(R.id.add_class_name);
         add_code = view.findViewById(R.id.add_class_code);
 
-        builder.setView(view).setPositiveButton("Add", new DialogInterface.OnClickListener() {
+        builder.setView(view).setPositiveButton("添加", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String addClassName = add_name.getText().toString();

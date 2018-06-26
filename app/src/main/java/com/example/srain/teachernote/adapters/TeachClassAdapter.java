@@ -1,4 +1,4 @@
-package com.example.srain.teachernote;
+package com.example.srain.teachernote.adapters;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.srain.teachernote.Activities.TeachClassActivity;
+import com.example.srain.teachernote.MyApplication;
+import com.example.srain.teachernote.R;
+import com.example.srain.teachernote.activities.TeachClassActivity;
 import com.example.srain.teachernote.database.TeachClass;
 
 import java.util.List;

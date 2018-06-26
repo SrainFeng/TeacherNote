@@ -10,6 +10,7 @@
         <mapping class="com.example.srain.teachernote.database.ExperimentList"></mapping>
         <mapping class="com.example.srain.teachernote.database.Student"></mapping>
         <mapping class="com.example.srain.teachernote.database.TeachClass"></mapping>
-        <mapping class="com.example.srain.teachernote.database.StudentList"></mapping>
+        <mapping class="com.example.srain.teachernote.database.TeachClassStudentList"></mapping>
+        <mapping class="com.example.srain.teachernote.database.ExperimentStudentList"></mapping>
     </list>
 </litepal>

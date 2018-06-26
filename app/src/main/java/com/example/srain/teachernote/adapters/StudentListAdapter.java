@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.Activities;
+package com.example.srain.teachernote.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.database.Student;
+import com.example.srain.teachernote.database.TeachClassStudentList;
+
+import org.litepal.LitePal;
 
 import java.util.List;
 
@@ -22,21 +25,26 @@ public class StudentListAdapter extends RecyclerView .Adapter<StudentListAdapter
 
     private List<Student> mStudentList;
 
+    int classId;
+
     static class ViewHolder extends RecyclerView.ViewHolder{
         View view;
         TextView studentName;
         TextView studentId;
+        TextView studentScore;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
             studentName = view.findViewById(R.id.student_name);
             studentId = view.findViewById(R.id.student_number);
+            studentScore = view.findViewById(R.id.student_score);
         }
     }
 
-    public StudentListAdapter(List<Student> studentList) {
+    public StudentListAdapter(List<Student> studentList, int classId) {
         mStudentList = studentList;
+        this.classId = classId;
     }
 
     @NonNull
@@ -59,6 +67,10 @@ public class StudentListAdapter extends RecyclerView .Adapter<StudentListAdapter
         Student student = mStudentList.get(position);
         holder.studentName.setText(student.getName());
         holder.studentId.setText(student.getStudentNumber());
+        float score = LitePal.where("classId = ? and studentId = ?", classId + "", student.getId() + "")
+                .findFirst(TeachClassStudentList.class)
+                .getScore();
+        holder.studentScore.setText(score + "");
     }
 
     @Override

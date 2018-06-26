@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.Activities;
+package com.example.srain.teachernote.activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -58,6 +58,7 @@ public class TeachClassActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TeachClassActivity.this, StudentListActivity.class);
+                intent.putExtra("class_id", classId);
                 startActivity(intent);
             }
         });
@@ -68,8 +69,6 @@ public class TeachClassActivity extends AppCompatActivity {
         // 获取数据库中的数据
 
         List<TeachClass> teachClasses = LitePal.where("classCode = ?", classCode).find(TeachClass.class);
-
-
 
         if (!teachClasses.isEmpty()) {
             TeachClass teachClass = teachClasses.get(0);

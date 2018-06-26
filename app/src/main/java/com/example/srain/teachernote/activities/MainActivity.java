@@ -1,4 +1,4 @@
-package com.example.srain.teachernote;
+package com.example.srain.teachernote.activities;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -8,6 +8,9 @@ import android.os.Bundle;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
+import com.example.srain.teachernote.fragments.ExperimentListFragment;
+import com.example.srain.teachernote.R;
+import com.example.srain.teachernote.fragments.TeachClassListFragment;
 
 import org.litepal.tablemanager.Connector;
 

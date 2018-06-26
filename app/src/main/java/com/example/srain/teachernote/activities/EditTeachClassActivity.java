@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.Activities;
+package com.example.srain.teachernote.activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -75,7 +75,7 @@ public class EditTeachClassActivity extends AppCompatActivity {
                 mTeachClass.setDescribe(describeText.getText().toString());
                 mTeachClass.update(mTeachClass.getId());
 
-                Toast.makeText(this, "sadsada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "信息保存成功！", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;

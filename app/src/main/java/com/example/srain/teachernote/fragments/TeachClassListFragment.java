@@ -1,4 +1,4 @@
-package com.example.srain.teachernote;
+package com.example.srain.teachernote.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.srain.teachernote.R;
+import com.example.srain.teachernote.adapters.TeachClassAdapter;
 import com.example.srain.teachernote.database.TeachClass;
 
 import org.litepal.LitePal;
@@ -31,7 +33,7 @@ import java.util.List;
  *
  * @author srain
  */
-public class TeachClassListFragment extends Fragment implements AddTeachClassDialogFragment.LoginInputListener{
+public class TeachClassListFragment extends Fragment implements AddTeachClassDialogFragment.LoginInputListener {
 
     private List<TeachClass> mClassList = new ArrayList<>();
 
@@ -83,7 +85,7 @@ public class TeachClassListFragment extends Fragment implements AddTeachClassDia
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("studentfragment", "you click the setting");
+        Log.d("studentFragment", "you click the setting");
         switch (item.getItemId()) {
             case android.R.id.home:
                 break;
@@ -99,7 +101,7 @@ public class TeachClassListFragment extends Fragment implements AddTeachClassDia
 
     private void showDialog(){
         AddTeachClassDialogFragment addTeachClassDialogFragment = AddTeachClassDialogFragment.addDialogFragmentCreator();
-        addTeachClassDialogFragment.show(getFragmentManager(), "loginDialog");
+        addTeachClassDialogFragment.show(getFragmentManager(), "addTeachClassDialog");
     }
 
     @Override

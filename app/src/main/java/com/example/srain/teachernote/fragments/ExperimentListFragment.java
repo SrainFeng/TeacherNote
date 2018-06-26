@@ -1,4 +1,4 @@
-package com.example.srain.teachernote;
+package com.example.srain.teachernote.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +15,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.srain.teachernote.Experiment;
+import com.example.srain.teachernote.R;
+import com.example.srain.teachernote.adapters.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

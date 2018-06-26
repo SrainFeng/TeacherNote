@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
@@ -19,6 +20,7 @@ import com.example.srain.teachernote.database.Student;
 import com.example.srain.teachernote.database.TeachClassStudentList;
 import com.example.srain.teachernote.fragments.AddStudentListDialogFragment;
 import com.example.srain.teachernote.fragments.SamplePromptDialogFragment;
+import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
@@ -56,12 +58,11 @@ public class StudentListActivity extends AppCompatActivity implements AddStudent
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
+
+        final Intent intent = getIntent();
+        classId = intent.getIntExtra("class_id", -1);
+
         studentSwipeRecyclerView = findViewById(R.id.swipe_menu_recycler_view);
-
-
-        Intent intent = getIntent();
-        classId = intent.getIntExtra("class_id", 0);
-        Log.d("StudentListActivity", classId+"");
 
         studentListToolbar = findViewById(R.id.student_list_toolbar);
         setSupportActionBar(studentListToolbar);
@@ -73,16 +74,9 @@ public class StudentListActivity extends AppCompatActivity implements AddStudent
         }
 
         // 查找出该课程的所有学生的 id
-        studentLists = LitePal.where("classId = ?", classId + "").find(TeachClassStudentList.class);
-        if (!studentLists.isEmpty()) {
-            for (TeachClassStudentList teachClassStudentList:studentLists) {
-                studentIdList.add(teachClassStudentList.getStudentId());
-
-                Log.d("StudentListActivity",  "classId: " + classId + "studentId: " + teachClassStudentList.getStudentId());
-            }
-        }
-
+        findStudentId();
         initList();
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         studentSwipeRecyclerView.setLayoutManager(linearLayoutManager);
         adapter = new StudentListAdapter(studentList, classId);
@@ -103,6 +97,7 @@ public class StudentListActivity extends AppCompatActivity implements AddStudent
 
         studentSwipeRecyclerView.setSwipeMenuCreator(mSwipeMenuCreator);
 
+        // 侧滑菜单中点击事件
         studentSwipeRecyclerView.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
             @Override
             public void onItemClick(SwipeMenuBridge menuBridge) {
@@ -112,10 +107,21 @@ public class StudentListActivity extends AppCompatActivity implements AddStudent
                 showSampleDialoge();
             }
         });
+
+        // 列表项点击事件
+        studentSwipeRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                Intent showStudentDataIntent = new Intent(StudentListActivity.this, StudentDataActivity.class);
+                Student student = studentList.get(position);
+                showStudentDataIntent.putExtra("student_id", student.getId());
+                startActivity(showStudentDataIntent);
+            }
+        });
+
         DefaultItemDecoration defaultItemDecoration = new DefaultItemDecoration(Color.GRAY, 100, 2);
         studentSwipeRecyclerView.addItemDecoration(defaultItemDecoration);
         studentSwipeRecyclerView.setAdapter(adapter);
-
     }
 
     @Override
@@ -123,6 +129,17 @@ public class StudentListActivity extends AppCompatActivity implements AddStudent
         super.onResume();
         initList();
         adapter.notifyDataSetChanged();
+    }
+
+    private void findStudentId(){
+        studentLists = LitePal.where("classId = ?", classId + "").find(TeachClassStudentList.class);
+        if (!studentLists.isEmpty()) {
+            for (TeachClassStudentList teachClassStudentList:studentLists) {
+                studentIdList.add(teachClassStudentList.getStudentId());
+
+                Log.d("StudentListActivity",  "classId: " + classId + "studentId: " + teachClassStudentList.getStudentId());
+            }
+        }
     }
 
     /**

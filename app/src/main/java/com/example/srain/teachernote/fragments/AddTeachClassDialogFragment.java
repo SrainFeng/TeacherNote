@@ -74,7 +74,7 @@ public class AddTeachClassDialogFragment extends DialogFragment {
 
     public interface LoginInputListener{
         /**
-         *
+         * 将 Dialog 中输入的信息返回给调用的fragment，该 fragment 需要实现该接口
          * @param addClassName 要添加的课程姓名
          * @param addClassCode 要添加的课程编码
          */

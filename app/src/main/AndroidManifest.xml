@@ -19,7 +19,9 @@
         </activity>
         <activity android:name=".activities.TeachClassActivity" />
         <activity android:name=".activities.EditTeachClassActivity" />
-        <activity android:name=".activities.StudentListActivity"></activity>
+        <activity android:name=".activities.StudentListActivity" />
+        <activity android:name=".activities.StudentDataActivity" />
+        <activity android:name=".activities.EditStudentDataActivity"></activity>
     </application>
 
 </manifest>

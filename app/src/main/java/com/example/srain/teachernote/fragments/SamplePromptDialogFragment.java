@@ -68,6 +68,9 @@ public class SamplePromptDialogFragment extends DialogFragment {
     }
 
     public interface SampleInputListener{
+        /**
+         * 选择确定则执行该回调中的操作
+         */
         void sampleCellBack();
     }
 }

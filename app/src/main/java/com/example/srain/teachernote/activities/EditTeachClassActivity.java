@@ -85,7 +85,7 @@ public class EditTeachClassActivity extends AppCompatActivity {
 
     private void setDefaultText() {
         Intent intent = getIntent();
-        int ClassId = intent.getIntExtra("class_id", 0);
+        int ClassId = intent.getIntExtra("class_id", -1);
         mTeachClass = LitePal.find(TeachClass.class, ClassId);
         classNameText.setText(mTeachClass.getName());
         classCodeText.setText(mTeachClass.getClassCode());

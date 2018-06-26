@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<litepal>
+    <dbname value="TeacherNote"></dbname>
+
+    <version value="1"></version>
+
+    <list>
+        <mapping class="com.example.srain.teachernote.database.Experiment"></mapping>
+        <mapping class="com.example.srain.teachernote.database.ExperimentClass"></mapping>
+        <mapping class="com.example.srain.teachernote.database.ExperimentList"></mapping>
+        <mapping class="com.example.srain.teachernote.database.Student"></mapping>
+        <mapping class="com.example.srain.teachernote.database.TeachClass"></mapping>
+        <mapping class="com.example.srain.teachernote.database.StudentList"></mapping>
+    </list>
+</litepal>

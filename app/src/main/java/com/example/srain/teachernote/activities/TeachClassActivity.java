@@ -23,14 +23,14 @@ import java.util.List;
  * 展示教学班的 Activity
  */
 public class TeachClassActivity extends AppCompatActivity {
-    Toolbar toolbar;
+    private Toolbar toolbar;
 
-    Button studentButton;
+    private Button studentButton;
 
     private int classId;
 
-    TextView classNameText, classCodeText;
-    TextView timeText, locationText, teacherText, creditText, describeText;
+    private TextView classNameText, classCodeText;
+    private TextView timeText, locationText, teacherText, creditText, describeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class TeachClassActivity extends AppCompatActivity {
         studentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TeachClassActivity.this, StudentListActivity.class);
+                Intent intent = new Intent(TeachClassActivity.this, TeachStudentListActivity.class);
                 intent.putExtra("class_id", classId);
                 startActivity(intent);
             }

@@ -15,10 +15,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.srain.teachernote.Experiment;
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.adapters.ListAdapter;
+import com.example.srain.teachernote.adapters.ExperimentClassAdapter;
+import com.example.srain.teachernote.database.ExperimentClass;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,22 +32,26 @@ import java.util.List;
  *
  * @author srain
  */
-public class ExperimentListFragment extends Fragment {
-    private List<Experiment> mExperimentList = new ArrayList<>();
+public class ExperimentClassListFragment extends Fragment implements AddClassDialogFragment.LoginInputListener{
+
+    private List<ExperimentClass> mExperimentClassList = new ArrayList<>();
+
     private Toolbar toolbar;
+
+    ExperimentClassAdapter adapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.experiment_list,container,false);
-        toolbar = view.findViewById(R.id.experiment_toolbar);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.experiment_class_list,container,false);
+        toolbar = view.findViewById(R.id.experiment_class_toolbar);
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        initExperimentList();
+        initList();
         RecyclerView experimentRecyclerView = view.findViewById(R.id.experiment_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         experimentRecyclerView.setLayoutManager(gridLayoutManager);
-        ListAdapter adapter = new ListAdapter(mExperimentList);
+        adapter = new ExperimentClassAdapter(mExperimentClassList);
         experimentRecyclerView.setAdapter(adapter);
 
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
@@ -55,12 +62,21 @@ public class ExperimentListFragment extends Fragment {
         return view;
     }
 
-    private void initExperimentList() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        initList();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void initList() {
         for (int i = 1; i <= 50; i++) {
-            Experiment experiment = new Experiment();
-            experiment.setExperimentId("No." + i);
-            experiment.setExperimentName("Experiment" + i);
-            mExperimentList.add(experiment);
+            mExperimentClassList.clear();
+            // 不要直接将从数据库中取出的值的列表传给 mExperimentClassList ，要深复制
+            List<ExperimentClass> experimentClasses = LitePal.findAll(ExperimentClass.class);
+            for(ExperimentClass experimentClass:experimentClasses) {
+                mExperimentClassList.add(experimentClass);
+            }
         }
     }
 
@@ -75,10 +91,27 @@ public class ExperimentListFragment extends Fragment {
             case android.R.id.home:
                 break;
             case R.id.adds:
+                AddClassDialogFragment.setLoginInputListener(this);
+                showDialog();
                 break;
             default:
                 break;
         }
         return true;
+    }
+    private void showDialog(){
+        AddClassDialogFragment addClassDialogFragment = AddClassDialogFragment.addDialogFragmentCreator();
+        addClassDialogFragment.show(getFragmentManager(), "addExperimentClassDialog");
+    }
+
+    @Override
+    public void onLogInputComplete(String addClassName, String addClassCode) {
+        Toast.makeText(getActivity(), "name: " + addClassName + " code:" + addClassCode, Toast.LENGTH_SHORT).show();
+        ExperimentClass experimentClass = new ExperimentClass();
+        experimentClass.setName(addClassName);
+        experimentClass.setClassCode(addClassCode);
+        experimentClass.save();
+        initList();
+        adapter.notifyDataSetChanged();
     }
 }

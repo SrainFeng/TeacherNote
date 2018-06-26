@@ -2,7 +2,7 @@
 <litepal>
     <dbname value="TeacherNote"></dbname>
 
-    <version value="1"></version>
+    <version value="3"></version>
 
     <list>
         <mapping class="com.example.srain.teachernote.database.Experiment"></mapping>
@@ -11,6 +11,6 @@
         <mapping class="com.example.srain.teachernote.database.Student"></mapping>
         <mapping class="com.example.srain.teachernote.database.TeachClass"></mapping>
         <mapping class="com.example.srain.teachernote.database.TeachClassStudentList"></mapping>
-        <mapping class="com.example.srain.teachernote.database.ExperimentStudentList"></mapping>
+        <mapping class="com.example.srain.teachernote.database.ExperimentClassStudentList"></mapping>
     </list>
 </litepal>

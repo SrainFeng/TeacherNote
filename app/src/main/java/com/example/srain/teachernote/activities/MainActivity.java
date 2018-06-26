@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
-import com.example.srain.teachernote.fragments.ExperimentListFragment;
+import com.example.srain.teachernote.fragments.ExperimentClassListFragment;
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.fragments.TeachClassListFragment;
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TeachClassListFragment mTeachClassListFragment;
 
-    private ExperimentListFragment mExperimentListFragment;
+    private ExperimentClassListFragment mExperimentClassListFragment;
 
     BottomNavigationItem classButton;
     BottomNavigationItem labButton;
@@ -104,12 +104,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void showExperimentListFragment() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (mExperimentListFragment == null) {
-            mExperimentListFragment = new ExperimentListFragment();
-            transaction.add(R.id.fragment_layout, mExperimentListFragment);
+        if (mExperimentClassListFragment == null) {
+            mExperimentClassListFragment = new ExperimentClassListFragment();
+            transaction.add(R.id.fragment_layout, mExperimentClassListFragment);
         }
         hideFragments(transaction);
-        transaction.show(mExperimentListFragment);
+        transaction.show(mExperimentClassListFragment);
         transaction.commit();
     }
 
@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
         if (mTeachClassListFragment != null) {
             transaction.hide(mTeachClassListFragment);
         }
-        if (mExperimentListFragment != null) {
-            transaction.hide(mExperimentListFragment);
+        if (mExperimentClassListFragment != null) {
+            transaction.hide(mExperimentClassListFragment);
         }
     }
 

@@ -19,9 +19,12 @@
         </activity>
         <activity android:name=".activities.TeachClassActivity" />
         <activity android:name=".activities.EditTeachClassActivity" />
-        <activity android:name=".activities.StudentListActivity" />
+        <activity android:name=".activities.TeachStudentListActivity" />
         <activity android:name=".activities.StudentDataActivity" />
-        <activity android:name=".activities.EditStudentDataActivity"></activity>
+        <activity android:name=".activities.EditStudentDataActivity" />
+        <activity android:name=".activities.ExperimentClassActivity" />
+        <activity android:name=".activities.EditExperimentClassActivity" />
+        <activity android:name=".activities.ExperimentStudentListActivity"></activity>
     </application>
 
 </manifest>

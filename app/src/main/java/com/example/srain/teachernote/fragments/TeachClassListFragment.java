@@ -33,7 +33,7 @@ import java.util.List;
  *
  * @author srain
  */
-public class TeachClassListFragment extends Fragment implements AddTeachClassDialogFragment.LoginInputListener {
+public class TeachClassListFragment extends Fragment implements AddClassDialogFragment.LoginInputListener {
 
     private List<TeachClass> mClassList = new ArrayList<>();
 
@@ -90,7 +90,7 @@ public class TeachClassListFragment extends Fragment implements AddTeachClassDia
             case android.R.id.home:
                 break;
             case R.id.adds:
-                AddTeachClassDialogFragment.setLoginInputListener(this);
+                AddClassDialogFragment.setLoginInputListener(this);
                 showDialog();
                 break;
             default:
@@ -100,8 +100,8 @@ public class TeachClassListFragment extends Fragment implements AddTeachClassDia
     }
 
     private void showDialog(){
-        AddTeachClassDialogFragment addTeachClassDialogFragment = AddTeachClassDialogFragment.addDialogFragmentCreator();
-        addTeachClassDialogFragment.show(getFragmentManager(), "addTeachClassDialog");
+        AddClassDialogFragment addClassDialogFragment = AddClassDialogFragment.addDialogFragmentCreator();
+        addClassDialogFragment.show(getFragmentManager(), "addTeachClassDialog");
     }
 
     @Override

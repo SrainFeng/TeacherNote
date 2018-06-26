@@ -21,11 +21,11 @@ import java.util.List;
  *
  * @author srain
  */
-public class StudentListAdapter extends RecyclerView .Adapter<StudentListAdapter.ViewHolder>{
+public class TeachStudentListAdapter extends RecyclerView .Adapter<TeachStudentListAdapter.ViewHolder>{
 
     private List<Student> mStudentList;
 
-    int classId;
+    private int classId;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         View view;
@@ -42,7 +42,7 @@ public class StudentListAdapter extends RecyclerView .Adapter<StudentListAdapter
         }
     }
 
-    public StudentListAdapter(List<Student> studentList, int classId) {
+    public TeachStudentListAdapter(List<Student> studentList, int classId) {
         mStudentList = studentList;
         this.classId = classId;
     }

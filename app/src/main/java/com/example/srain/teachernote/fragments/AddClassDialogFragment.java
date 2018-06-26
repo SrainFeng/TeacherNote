@@ -20,13 +20,13 @@ import com.example.srain.teachernote.R;
  *
  * @author srain
  */
-public class AddTeachClassDialogFragment extends DialogFragment {
+public class AddClassDialogFragment extends DialogFragment {
 
     private EditText add_name;
 
     private EditText add_code;
 
-    static AddTeachClassDialogFragment addTeachClassDialogFragment;
+    static AddClassDialogFragment addClassDialogFragment;
 
     private static LoginInputListener mListener;
 
@@ -34,15 +34,15 @@ public class AddTeachClassDialogFragment extends DialogFragment {
         mListener = listener;
     }
 
-    public static AddTeachClassDialogFragment addDialogFragmentCreator() {
-        if (addTeachClassDialogFragment == null) {
-            addTeachClassDialogFragment = new AddTeachClassDialogFragment();
+    public static AddClassDialogFragment addDialogFragmentCreator() {
+        if (addClassDialogFragment == null) {
+            addClassDialogFragment = new AddClassDialogFragment();
         }
         // 工厂方法传递参数的方法
         Bundle bundle = new Bundle();
         bundle.putString("name", "sss");
-        addTeachClassDialogFragment.setArguments(bundle);
-        return addTeachClassDialogFragment;
+        addClassDialogFragment.setArguments(bundle);
+        return addClassDialogFragment;
     }
 
     @Override

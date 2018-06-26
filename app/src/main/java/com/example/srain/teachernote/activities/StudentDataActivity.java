@@ -8,20 +8,21 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.srain.teachernote.Experiment;
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.adapters.ListAdapter;
+import com.example.srain.teachernote.adapters.ExperimentClassAdapter;
 import com.example.srain.teachernote.adapters.TeachClassAdapter;
+import com.example.srain.teachernote.database.ExperimentClass;
+import com.example.srain.teachernote.database.ExperimentClassStudentList;
 import com.example.srain.teachernote.database.Student;
 import com.example.srain.teachernote.database.TeachClass;
 import com.example.srain.teachernote.database.TeachClassStudentList;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +37,15 @@ public class StudentDataActivity extends AppCompatActivity {
 
     private TextView gradeText, majorText, nameText, numberText;
 
-    private RecyclerView teachClassRecyclerView, experientClassRecyclerView;
+    private RecyclerView teachClassRecyclerView, experimentClassRecyclerView;
 
     private TeachClassAdapter teachClassAdapter;
 
-    private ListAdapter experimentClassAdapter;
+    private ExperimentClassAdapter experimentClassAdapter;
 
     private List<TeachClass> mTeachClasses = new ArrayList<>();
 
-    private List<Experiment> mExperiments = new ArrayList<>();
+    private List<ExperimentClass> mExperimentClasses = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class StudentDataActivity extends AppCompatActivity {
         mStudentId = intent.getIntExtra("student_id", -1);
 
         teachClassRecyclerView = findViewById(R.id.student_teach_class_list);
-        experientClassRecyclerView = findViewById(R.id.student_experiment_class_list);
+        experimentClassRecyclerView = findViewById(R.id.student_experiment_class_list);
         nameText = findViewById(R.id.student_data_name);
         numberText = findViewById(R.id.student_data_number);
         majorText = findViewById(R.id.major_text);
@@ -79,9 +80,9 @@ public class StudentDataActivity extends AppCompatActivity {
         teachClassRecyclerView.setAdapter(teachClassAdapter);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        experientClassRecyclerView.setLayoutManager(gridLayoutManager);
-        experimentClassAdapter = new ListAdapter(mExperiments);
-        experientClassRecyclerView.setAdapter(experimentClassAdapter);
+        experimentClassRecyclerView.setLayoutManager(gridLayoutManager);
+        experimentClassAdapter = new ExperimentClassAdapter(mExperimentClasses);
+        experimentClassRecyclerView.setAdapter(experimentClassAdapter);
     }
 
     @Override
@@ -103,11 +104,13 @@ public class StudentDataActivity extends AppCompatActivity {
     }
 
     private void initExperimentList() {
-        for (int i = 1; i <= 50; i++) {
-            Experiment experiment = new Experiment();
-            experiment.setExperimentId("No." + i);
-            experiment.setExperimentName("Experiment" + i);
-            mExperiments.add(experiment);
+        List<ExperimentClassStudentList> experimentClassStudentLists = LitePal
+                .where("studentId = ?", mStudentId + "")
+                .find(ExperimentClassStudentList.class);
+        if (!experimentClassStudentLists.isEmpty()) {
+            for (ExperimentClassStudentList item:experimentClassStudentLists) {
+                mExperimentClasses.add(LitePal.find(ExperimentClass.class, item.getClassId()));
+            }
         }
     }
 

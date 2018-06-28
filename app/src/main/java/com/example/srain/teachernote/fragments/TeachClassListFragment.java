@@ -58,7 +58,7 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.drawable.home);
         }
         return view;
     }

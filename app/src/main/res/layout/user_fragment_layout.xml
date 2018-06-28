@@ -23,12 +23,11 @@
         android:padding="15dp"
         android:gravity="center"
         android:background="#e9edfe"
-        android:text="用户"
-        android:textSize="15dp"/>
+        android:text="@string/user_fragment_title"
+        android:textSize="15sp"/>
 
 
     <LinearLayout
-        android:id="@+id/user_data"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,12 +43,11 @@
 
         <TextView
             android:id="@+id/user_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:text="user name"
+            android:text="@string/user_name_text"
             android:textSize="20sp"/>
         
         <ImageView
@@ -62,7 +60,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/student_list"
+        android:id="@+id/student_list_l"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -24,7 +24,8 @@
         <activity android:name=".activities.EditStudentDataActivity" />
         <activity android:name=".activities.ExperimentClassActivity" />
         <activity android:name=".activities.EditExperimentClassActivity" />
-        <activity android:name=".activities.ExperimentStudentListActivity"></activity>
+        <activity android:name=".activities.ExperimentStudentListActivity" />
+        <activity android:name=".activities.StudentListActivity"></activity>
     </application>
 
 </manifest>

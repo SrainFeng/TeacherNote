@@ -1,5 +1,6 @@
 package com.example.srain.teachernote.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.srain.teachernote.MyApplication;
 import com.example.srain.teachernote.R;
+import com.example.srain.teachernote.activities.StudentListActivity;
 
 /**
  * Project: TeacherNote
@@ -23,11 +27,11 @@ import com.example.srain.teachernote.R;
  *
  * @author srain
  */
-public class UserFragment extends Fragment {
+public class UserFragment extends Fragment implements View.OnClickListener{
 
     private Toolbar toolbar;
 
-    private LinearLayout userData, studentList;
+    private LinearLayout studentList;
 
     @Nullable
     @Override
@@ -37,6 +41,9 @@ public class UserFragment extends Fragment {
 
         setHasOptionsMenu(true);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
+        studentList = view.findViewById(R.id.student_list_l);
+        studentList.setOnClickListener(this);
 
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -63,5 +70,17 @@ public class UserFragment extends Fragment {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.student_list_l:
+                Intent intent = new Intent(MyApplication.getContext(), StudentListActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
     }
 }

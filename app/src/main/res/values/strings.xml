@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TeacherNote</string>
+    <string name="user_fragment_title">用户</string>
+    <string name="user_name_text">user name</string>
 </resources>

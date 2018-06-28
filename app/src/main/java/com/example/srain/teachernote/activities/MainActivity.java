@@ -1,6 +1,8 @@
 package com.example.srain.teachernote.activities;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,11 +10,16 @@ import android.os.Bundle;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
+import com.example.srain.teachernote.adapters.FragmentAdapter;
 import com.example.srain.teachernote.fragments.ExperimentClassListFragment;
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.fragments.TeachClassListFragment;
+import com.example.srain.teachernote.fragments.UserFragment;
 
 import org.litepal.tablemanager.Connector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -21,17 +28,22 @@ import org.litepal.tablemanager.Connector;
  *
  * @author srain
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-    private BottomNavigationBar bottomBar;
+    private ViewPager viewPager;
 
     private TeachClassListFragment mTeachClassListFragment;
 
     private ExperimentClassListFragment mExperimentClassListFragment;
 
-    BottomNavigationItem classButton;
-    BottomNavigationItem labButton;
-    BottomNavigationItem userButton;
+    private BottomNavigationBar mBottomBar;
+
+    private UserFragment mUserFragment;
+
+    private FragmentAdapter mFragmentAdapter;
+
+    private List<Fragment> mFragmentList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -40,36 +52,32 @@ public class MainActivity extends AppCompatActivity {
 
         Connector.getDatabase();
 
-        bottomBar = findViewById(R.id.bottom_bar);
-        classButton = new BottomNavigationItem(R.mipmap.ic_paste, "教学班");
-        labButton = new BottomNavigationItem(R.mipmap.ic_folder, "实验");
-        userButton = new BottomNavigationItem(R.mipmap.ic_user, "用户");
+        mBottomBar = findViewById(R.id.bottom_bar);
+        viewPager = findViewById(R.id.view_pager);
+
+        initFragmentList();
+
+        BottomNavigationItem classButton = new BottomNavigationItem(R.mipmap.ic_paste, "教学班");
+        BottomNavigationItem labButton = new BottomNavigationItem(R.mipmap.ic_folder, "实验班");
+        BottomNavigationItem userButton = new BottomNavigationItem(R.mipmap.ic_user, "用户");
+
         TextBadgeItem numberBadgeItem = new TextBadgeItem();
         numberBadgeItem.setText("5")
                 .setBackgroundColor("#ea3f3f")
                 .setTextColor("#ecdcff")
                 .setAnimationDuration(100)
                 .setHideOnSelect(true);
-        bottomBar
+        mBottomBar
                 .addItem(classButton)
                 .addItem(labButton.setBadgeItem(numberBadgeItem))
                 .addItem(userButton)
                 .setFirstSelectedPosition(0)
                 .initialise();
-        showStudentListFragment();
 
-        bottomBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
+        mBottomBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
-                switch (position) {
-                    case 0:
-                        showStudentListFragment();
-                        break;
-                    case 1:
-                        showExperimentListFragment();
-                    default:
-                        break;
-                }
+                viewPager.setCurrentItem(position);
 
             }
 
@@ -89,38 +97,35 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 
+        mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragmentList);
+
+        viewPager.setAdapter(mFragmentAdapter);
+        viewPager.setCurrentItem(0);
+        viewPager.addOnPageChangeListener(this);
+
     }
 
-    private void showStudentListFragment() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (mTeachClassListFragment == null) {
-            mTeachClassListFragment = new TeachClassListFragment();
-            transaction.add(R.id.fragment_layout, mTeachClassListFragment);
-        }
-        hideFragments(transaction);
-        transaction.show(mTeachClassListFragment);
-        transaction.commit();
+    private void initFragmentList() {
+        mTeachClassListFragment = new TeachClassListFragment();
+        mExperimentClassListFragment = new ExperimentClassListFragment();
+        mUserFragment = new UserFragment();
+        mFragmentList.add(mTeachClassListFragment);
+        mFragmentList.add(mExperimentClassListFragment);
+        mFragmentList.add(mUserFragment);
     }
 
-    private void showExperimentListFragment() {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (mExperimentClassListFragment == null) {
-            mExperimentClassListFragment = new ExperimentClassListFragment();
-            transaction.add(R.id.fragment_layout, mExperimentClassListFragment);
-        }
-        hideFragments(transaction);
-        transaction.show(mExperimentClassListFragment);
-        transaction.commit();
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
     }
 
-
-    private void hideFragments(FragmentTransaction transaction) {
-        if (mTeachClassListFragment != null) {
-            transaction.hide(mTeachClassListFragment);
-        }
-        if (mExperimentClassListFragment != null) {
-            transaction.hide(mExperimentClassListFragment);
-        }
+    @Override
+    public void onPageSelected(int position) {
+        mBottomBar.selectTab(position);
     }
 
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
 }

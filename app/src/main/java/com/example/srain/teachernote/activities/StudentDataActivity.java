@@ -15,14 +15,13 @@ import android.widget.TextView;
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.adapters.ExperimentClassAdapter;
 import com.example.srain.teachernote.adapters.TeachClassAdapter;
-import com.example.srain.teachernote.database.ExperimentClass;
-import com.example.srain.teachernote.database.ExperimentClassStudentList;
-import com.example.srain.teachernote.database.Student;
-import com.example.srain.teachernote.database.TeachClass;
-import com.example.srain.teachernote.database.TeachClassStudentList;
+import com.example.srain.teachernote.entity.ExperimentClass;
+import com.example.srain.teachernote.entity.ExperimentClassStudentList;
+import com.example.srain.teachernote.entity.Student;
+import com.example.srain.teachernote.entity.TeachClass;
+import com.example.srain.teachernote.entity.TeachClassStudentList;
 
 import org.litepal.LitePal;
-import org.litepal.crud.LitePalSupport;
 
 import java.util.ArrayList;
 import java.util.List;

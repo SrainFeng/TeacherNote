@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.database.Student;
+import com.example.srain.teachernote.entity.Student;
 
 import org.litepal.LitePal;
 

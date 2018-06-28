@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.adapters.ExperimentClassAdapter;
-import com.example.srain.teachernote.database.ExperimentClass;
+import com.example.srain.teachernote.entity.ExperimentClass;
 
 import org.litepal.LitePal;
 

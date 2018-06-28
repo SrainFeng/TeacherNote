@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.database.ExperimentClass;
+import com.example.srain.teachernote.entity.ExperimentClass;
 
 import org.litepal.LitePal;
 

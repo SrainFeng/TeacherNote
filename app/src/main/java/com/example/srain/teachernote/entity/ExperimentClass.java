@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.database;
+package com.example.srain.teachernote.entity;
 
 /**
  * Project: TeacherNote

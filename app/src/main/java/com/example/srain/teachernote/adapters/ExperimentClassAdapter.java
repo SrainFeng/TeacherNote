@@ -3,7 +3,6 @@ package com.example.srain.teachernote.adapters;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,7 @@ import android.widget.TextView;
 import com.example.srain.teachernote.MyApplication;
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.activities.ExperimentClassActivity;
-import com.example.srain.teachernote.activities.ExperimentStudentListActivity;
-import com.example.srain.teachernote.database.ExperimentClass;
+import com.example.srain.teachernote.entity.ExperimentClass;
 
 import java.util.List;
 

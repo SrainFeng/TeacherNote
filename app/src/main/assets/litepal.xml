@@ -5,12 +5,12 @@
     <version value="3"></version>
 
     <list>
-        <mapping class="com.example.srain.teachernote.database.Experiment"></mapping>
-        <mapping class="com.example.srain.teachernote.database.ExperimentClass"></mapping>
-        <mapping class="com.example.srain.teachernote.database.ExperimentList"></mapping>
-        <mapping class="com.example.srain.teachernote.database.Student"></mapping>
-        <mapping class="com.example.srain.teachernote.database.TeachClass"></mapping>
-        <mapping class="com.example.srain.teachernote.database.TeachClassStudentList"></mapping>
-        <mapping class="com.example.srain.teachernote.database.ExperimentClassStudentList"></mapping>
+        <mapping class="com.example.srain.teachernote.entity.Experiment"></mapping>
+        <mapping class="com.example.srain.teachernote.entity.ExperimentClass"></mapping>
+        <mapping class="com.example.srain.teachernote.entity.ExperimentList"></mapping>
+        <mapping class="com.example.srain.teachernote.entity.Student"></mapping>
+        <mapping class="com.example.srain.teachernote.entity.TeachClass"></mapping>
+        <mapping class="com.example.srain.teachernote.entity.TeachClassStudentList"></mapping>
+        <mapping class="com.example.srain.teachernote.entity.ExperimentClassStudentList"></mapping>
     </list>
 </litepal>

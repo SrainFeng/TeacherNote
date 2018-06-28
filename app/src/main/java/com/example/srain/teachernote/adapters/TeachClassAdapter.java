@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.srain.teachernote.MyApplication;
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.activities.TeachClassActivity;
-import com.example.srain.teachernote.database.TeachClass;
+import com.example.srain.teachernote.entity.TeachClass;
 
 import java.util.List;
 

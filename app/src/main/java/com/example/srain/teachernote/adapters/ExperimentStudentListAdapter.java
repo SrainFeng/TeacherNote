@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.database.ExperimentClassStudentList;
-import com.example.srain.teachernote.database.Student;
+import com.example.srain.teachernote.entity.ExperimentClassStudentList;
+import com.example.srain.teachernote.entity.Student;
 
 import org.litepal.LitePal;
 

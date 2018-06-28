@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.adapters.ExperimentStudentListAdapter;
-import com.example.srain.teachernote.database.ExperimentClassStudentList;
-import com.example.srain.teachernote.database.Student;
+import com.example.srain.teachernote.entity.ExperimentClassStudentList;
+import com.example.srain.teachernote.entity.Student;
 import com.example.srain.teachernote.fragments.AddStudentListDialogFragment;
 import com.example.srain.teachernote.fragments.SamplePromptDialogFragment;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;

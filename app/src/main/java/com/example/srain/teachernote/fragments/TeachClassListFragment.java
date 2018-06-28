@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.adapters.TeachClassAdapter;
-import com.example.srain.teachernote.database.TeachClass;
+import com.example.srain.teachernote.entity.TeachClass;
 
 import org.litepal.LitePal;
 

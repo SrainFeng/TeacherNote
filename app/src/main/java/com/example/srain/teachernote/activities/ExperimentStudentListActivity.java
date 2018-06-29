@@ -18,6 +18,7 @@ import com.example.srain.teachernote.adapters.ExperimentStudentListAdapter;
 import com.example.srain.teachernote.entity.ExperimentClassStudentList;
 import com.example.srain.teachernote.entity.Student;
 import com.example.srain.teachernote.fragments.AddStudentListDialogFragment;
+import com.example.srain.teachernote.fragments.ReviseScoreDialogFragment;
 import com.example.srain.teachernote.fragments.SamplePromptDialogFragment;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
@@ -35,7 +36,7 @@ import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public class ExperimentStudentListActivity extends AppCompatActivity implements AddStudentListDialogFragment.LoginInputListener, SamplePromptDialogFragment.SampleInputListener{
+public class ExperimentStudentListActivity extends AppCompatActivity implements AddStudentListDialogFragment.LoginInputListener, SamplePromptDialogFragment.SampleInputListener, ReviseScoreDialogFragment.LoginInputListener{
 
     private SwipeMenuRecyclerView studentSwipeRecyclerView;
 
@@ -51,11 +52,11 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
 
     private ExperimentStudentListAdapter adapter;
 
-    private int deletePosition;
+    private int position;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_experiment_student_list);
 
@@ -91,6 +92,15 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
                         .setWidth(300)
                         .setHeight(MATCH_PARENT);
                 swipeRightMenu.addMenuItem(deleteItem);
+
+                SwipeMenuItem reviseItem = new SwipeMenuItem(ExperimentStudentListActivity.this);
+                reviseItem.setBackgroundColor(Color.BLUE)
+                        .setText("修改")
+                        .setTextColor(Color.WHITE)
+                        .setTextSize(25)
+                        .setWidth(300)
+                        .setHeight(MATCH_PARENT);
+                swipeRightMenu.addMenuItem(reviseItem);
             }
         };
 
@@ -100,9 +110,20 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
             @Override
             public void onItemClick(SwipeMenuBridge menuBridge) {
                 menuBridge.closeMenu();
-                deletePosition = menuBridge.getAdapterPosition();
-                SamplePromptDialogFragment.setSampleInputListener(ExperimentStudentListActivity.this);
-                showSampleDialog();
+                position = menuBridge.getAdapterPosition();
+                int menuPosition = menuBridge.getPosition();
+                switch (menuPosition) {
+                    case 0:
+                        SamplePromptDialogFragment.setSampleInputListener(ExperimentStudentListActivity.this);
+                        showSampleDialog();
+                        break;
+                    case 1:
+                        ReviseScoreDialogFragment.setListener(ExperimentStudentListActivity.this);
+                        showScoreDialog();
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
@@ -179,6 +200,12 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
         samplePromptDialogFragment.show(fragmentManager, "alertDialog");
     }
 
+    private void showScoreDialog(){
+        ReviseScoreDialogFragment reviseScoreDialogFragment = ReviseScoreDialogFragment.FragmentCreator();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        reviseScoreDialogFragment.show(fragmentManager, "ScoreDialog");
+    }
+
     @Override
     public void onLogInputComplete(String addName, String addNumber, String addScore) {
         ExperimentClassStudentList experimentClassStudentList;
@@ -224,7 +251,7 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
 
     @Override
     public void sampleCellBack() {
-        Student student= studentList.get(deletePosition);
+        Student student= studentList.get(position);
         int studentId = student.getId();
         int listId;
         for (int j = 0; j < studentIdList.size(); j++){
@@ -242,6 +269,23 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
         initList();
         adapter.notifyDataSetChanged();
         Toast.makeText(ExperimentStudentListActivity.this, "已成功删除！", Toast.LENGTH_SHORT).show();
-        deletePosition = -1;
+        position = -1;
+    }
+
+    @Override
+    public void onLogInputComplete(String newScore) {
+        List<ExperimentClassStudentList> experimentClassStudentLists = LitePal
+                .where("classId = ? and studentId = ?", classId + "", studentList.get(position).getId() + "")
+                .find(ExperimentClassStudentList.class);
+        if (experimentClassStudentLists.size() == 1){
+            ExperimentClassStudentList experimentClassStudentList = experimentClassStudentLists.get(0);
+            experimentClassStudentList.setScore(Float.parseFloat(newScore));
+            experimentClassStudentList.update(experimentClassStudentList.getId());
+            initList();
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(this, "出了点问题", Toast.LENGTH_SHORT).show();
+        }
+        position = -1;
     }
 }

@@ -3,7 +3,6 @@ package com.example.srain.teachernote.adapters;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,7 +20,7 @@ import java.util.List;
  */
 public class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.ViewHolder> {
 
-    private List<Student> mStudentList;
+    protected List<Student> mStudentList;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         View view;

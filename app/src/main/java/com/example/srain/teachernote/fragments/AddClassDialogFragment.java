@@ -57,7 +57,7 @@ public class AddClassDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.teach_class_dialog_fragment_layout, null);
+        View view = inflater.inflate(R.layout.add_class_dialog_fragment_layout, null);
         add_name = view.findViewById(R.id.add_class_name);
         add_code = view.findViewById(R.id.add_class_code);
 

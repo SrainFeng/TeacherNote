@@ -22,39 +22,14 @@ import java.util.List;
  *
  * @author srain
  */
-public class ExperimentStudentListAdapter extends RecyclerView.Adapter<ExperimentStudentListAdapter.ViewHolder>{
-
-    private List<Student> mStudentList;
+public class ExperimentStudentListAdapter extends StudentListAdapter{
 
     private int classId;
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
-        View view;
-        TextView studentName;
-        TextView studentId;
-        TextView studentScore;
-
-        public ViewHolder(View view) {
-            super(view);
-            this.view = view;
-            studentName = view.findViewById(R.id.student_name);
-            studentId = view.findViewById(R.id.student_number);
-            studentScore = view.findViewById(R.id.student_score);
-        }
-    }
 
     public ExperimentStudentListAdapter(List<Student> studentList, int classId) {
-        mStudentList = studentList;
+        super(studentList);
         this.classId = classId;
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.student_list_item, parent, false);
-
-        final ViewHolder holder = new ViewHolder(view);
-        return holder;
     }
 
     @Override
@@ -68,8 +43,4 @@ public class ExperimentStudentListAdapter extends RecyclerView.Adapter<Experimen
         holder.studentScore.setText(score + "");
     }
 
-    @Override
-    public int getItemCount() {
-        return mStudentList.size();
-    }
 }

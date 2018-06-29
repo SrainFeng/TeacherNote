@@ -61,7 +61,7 @@ public class StudentListActivity extends AppCompatActivity implements AddStudent
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.home);
+            actionBar.setHomeAsUpIndicator(R.drawable.back);
         }
 
         // 初始化学生列表
@@ -148,6 +148,7 @@ public class StudentListActivity extends AppCompatActivity implements AddStudent
                 showAddStudentDialog();
                 break;
             case android.R.id.home:
+                finish();
                 break;
             default:
                 break;

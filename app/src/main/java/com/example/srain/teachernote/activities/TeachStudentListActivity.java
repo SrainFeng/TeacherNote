@@ -104,7 +104,7 @@ public class TeachStudentListActivity extends AppCompatActivity implements AddSt
                 menuBridge.closeMenu();
                 deletePosition = menuBridge.getAdapterPosition();
                 SamplePromptDialogFragment.setSampleInputListener(TeachStudentListActivity.this);
-                showSampleDialoge();
+                showSampleDialog();
             }
         });
 
@@ -180,7 +180,7 @@ public class TeachStudentListActivity extends AppCompatActivity implements AddSt
         addStudentListDialogFragment.show(fragmentManager, "addStudentDialog");
     }
 
-    private void showSampleDialoge(){
+    private void showSampleDialog(){
         SamplePromptDialogFragment samplePromptDialogFragment = SamplePromptDialogFragment.samplePromptDialogCreator("是否从这门课中删除该学生？");
         FragmentManager fragmentManager = getSupportFragmentManager();
         samplePromptDialogFragment.show(fragmentManager, "alertDialog");

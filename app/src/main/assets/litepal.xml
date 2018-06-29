@@ -2,7 +2,7 @@
 <litepal>
     <dbname value="TeacherNote"></dbname>
 
-    <version value="3"></version>
+    <version value="6"></version>
 
     <list>
         <mapping class="com.example.srain.teachernote.entity.Experiment"></mapping>

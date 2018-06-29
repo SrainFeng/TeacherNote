@@ -8,13 +8,4 @@ package com.example.srain.teachernote.entity;
  */
 public class ExperimentClass extends TeachClass{
 
-    private int experimentListId;
-
-    public int getExperimentListId() {
-        return experimentListId;
-    }
-
-    public void setExperimentListId(int experimentListId) {
-        this.experimentListId = experimentListId;
-    }
 }

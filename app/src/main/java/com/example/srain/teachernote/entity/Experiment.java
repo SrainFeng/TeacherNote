@@ -11,6 +11,10 @@ import org.litepal.crud.LitePalSupport;
 public class Experiment extends LitePalSupport {
     private int id;
 
+    private String code;
+
+    private String title;
+
     private String startTime;
 
     private String deadline;
@@ -23,6 +27,22 @@ public class Experiment extends LitePalSupport {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getStartTime() {

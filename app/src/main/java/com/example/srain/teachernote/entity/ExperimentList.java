@@ -1,12 +1,14 @@
 package com.example.srain.teachernote.entity;
 
+import org.litepal.crud.LitePalSupport;
+
 /**
  * Project: TeacherNote
  * Date: 2018/6/24
  *
  * @author srain
  */
-public class ExperimentList {
+public class ExperimentList extends LitePalSupport{
     private int id;
 
     private int classId;

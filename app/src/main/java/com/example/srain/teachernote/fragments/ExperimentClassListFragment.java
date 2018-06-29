@@ -70,14 +70,13 @@ public class ExperimentClassListFragment extends Fragment implements AddClassDia
     }
 
     private void initList() {
-        for (int i = 1; i <= 50; i++) {
-            mExperimentClassList.clear();
-            // 不要直接将从数据库中取出的值的列表传给 mExperimentClassList ，要深复制
-            List<ExperimentClass> experimentClasses = LitePal.findAll(ExperimentClass.class);
-            for(ExperimentClass experimentClass:experimentClasses) {
-                mExperimentClassList.add(experimentClass);
-            }
+        mExperimentClassList.clear();
+        // 不要直接将从数据库中取出的值的列表传给 mExperimentClassList ，要深复制
+        List<ExperimentClass> experimentClasses = LitePal.findAll(ExperimentClass.class);
+        for(ExperimentClass experimentClass:experimentClasses) {
+            mExperimentClassList.add(experimentClass);
         }
+        
     }
 
     @Override

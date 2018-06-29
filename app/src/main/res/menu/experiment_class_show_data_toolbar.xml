@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/experiment_class_edit"
+        android:title="Edit"
+        android:icon="@drawable/write"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/experiment_class_add"
+        android:title="添加实验"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/experiment_class_delete"
+        android:title="删除实验"
+        app:showAsAction="never"/>
+
+</menu>

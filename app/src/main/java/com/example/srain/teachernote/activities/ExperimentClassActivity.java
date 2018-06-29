@@ -141,7 +141,6 @@ public class ExperimentClassActivity extends AppCompatActivity implements AddCla
                 showDialog();
                 break;
             case R.id.experiment_class_delete:
-                // 搞事情
                 DeleteItemDialogFragment.setListener(this);
                 showDeleteDialog();
                 break;
@@ -250,10 +249,10 @@ public class ExperimentClassActivity extends AppCompatActivity implements AddCla
                 LitePal.deleteAll(ExperimentList.class, "experimentId = ?", eId + "");
                 LitePal.delete(Experiment.class, eId);
                 findExperimentId();
-                initExperimentList();
-                adapter.notifyDataSetChanged();
             }
         }
+        initExperimentList();
+        adapter.notifyDataSetChanged();
         Toast.makeText(this, "已删除实验", Toast.LENGTH_SHORT).show();
     }
 }

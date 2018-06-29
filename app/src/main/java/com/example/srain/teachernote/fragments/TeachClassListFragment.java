@@ -73,14 +73,12 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
     private void initList() {
         mClassList.clear();
         List<TeachClass> teachClasses = LitePal.findAll(TeachClass.class);
-        for (TeachClass teachClass:teachClasses) {
-            mClassList.add(teachClass);
-        }
+        mClassList.addAll(teachClasses);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.toolbar, menu);
+        inflater.inflate(R.menu.class_toolbar, menu);
     }
 
     @Override
@@ -93,6 +91,8 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
                 AddClassDialogFragment.setLoginInputListener(this);
                 showDialog();
                 break;
+            case R.id.delete:
+                // 搞事情
             default:
                 break;
         }

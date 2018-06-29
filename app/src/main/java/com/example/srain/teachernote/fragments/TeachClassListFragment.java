@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.example.srain.teachernote.R;
 import com.example.srain.teachernote.adapters.TeachClassAdapter;
 import com.example.srain.teachernote.entity.TeachClass;
+import com.example.srain.teachernote.entity.TeachClassStudentList;
 
 import org.litepal.LitePal;
 
@@ -33,7 +35,7 @@ import java.util.List;
  *
  * @author srain
  */
-public class TeachClassListFragment extends Fragment implements AddClassDialogFragment.LoginInputListener {
+public class TeachClassListFragment extends Fragment implements AddClassDialogFragment.LoginInputListener , DeleteItemDialogFragment.LoginInputListener{
 
     private List<TeachClass> mClassList = new ArrayList<>();
 
@@ -93,6 +95,8 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
                 break;
             case R.id.delete:
                 // 搞事情
+                DeleteItemDialogFragment.setListener(this);
+                showDeleteDialog();
             default:
                 break;
         }
@@ -104,6 +108,18 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
         addClassDialogFragment.show(getFragmentManager(), "addTeachClassDialog");
     }
 
+    private void showDeleteDialog(){
+        String[] items = new String[mClassList.size()];
+        boolean[] itemStatus = new boolean[mClassList.size()];
+        for(int i = 0; i < mClassList.size(); i++) {
+            items[i] = mClassList.get(i).getName();
+            itemStatus[i] = false;
+        }
+        DeleteItemDialogFragment deleteItemDialogFragment = DeleteItemDialogFragment.DeleteItemDialogCreator(items, itemStatus);
+        FragmentManager fragmentManager = getFragmentManager();
+        deleteItemDialogFragment.show(fragmentManager, "deleteExperiment");
+    }
+
     @Override
     public void onLogInputComplete(String addClassName, String addClassCode) {
         Toast.makeText(getActivity(), "name: " + addClassName + " code:" + addClassCode, Toast.LENGTH_SHORT).show();
@@ -111,6 +127,20 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
         teachClass.setName(addClassName);
         teachClass.setClassCode(addClassCode);
         teachClass.save();
+        initList();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLogInputComplete(boolean[] itemStatus) {
+        for (int i = 0; i < itemStatus.length; i++) {
+            if (itemStatus[i]) {
+                TeachClass teachClass = mClassList.get(i);
+                int tClassId = teachClass.getId();
+                LitePal.deleteAll(TeachClassStudentList.class, "classId = ?", tClassId + "");
+                LitePal.delete(TeachClass.class, tClassId);
+            }
+        }
         initList();
         adapter.notifyDataSetChanged();
     }

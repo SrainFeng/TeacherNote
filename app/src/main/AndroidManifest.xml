@@ -10,24 +10,24 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TeachClassActivity" />
-        <activity android:name=".activities.EditTeachClassActivity" />
-        <activity android:name=".activities.TeachStudentListActivity" />
-        <activity android:name=".activities.StudentDataActivity" />
-        <activity android:name=".activities.EditStudentDataActivity" />
-        <activity android:name=".activities.ExperimentClassActivity" />
-        <activity android:name=".activities.EditExperimentClassActivity" />
-        <activity android:name=".activities.ExperimentStudentListActivity" />
-        <activity android:name=".activities.StudentListActivity" />
-        <activity android:name=".activities.ExperimentDataActivity" />
-        <activity android:name=".activities.EditExperimentDataActivity"/>
+        <activity android:name=".ui.activities.TeachClassActivity" />
+        <activity android:name=".ui.activities.EditTeachClassActivity" />
+        <activity android:name=".ui.activities.TeachStudentListActivity" />
+        <activity android:name=".ui.activities.StudentDataActivity" />
+        <activity android:name=".ui.activities.EditStudentDataActivity" />
+        <activity android:name=".ui.activities.ExperimentClassActivity" />
+        <activity android:name=".ui.activities.EditExperimentClassActivity" />
+        <activity android:name=".ui.activities.ExperimentStudentListActivity" />
+        <activity android:name=".ui.activities.StudentListActivity" />
+        <activity android:name=".ui.activities.ExperimentDataActivity" />
+        <activity android:name=".ui.activities.EditExperimentDataActivity"/>
     </application>
 
 </manifest>

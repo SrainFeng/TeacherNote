@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.adapters;
+package com.example.srain.teachernote.ui.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

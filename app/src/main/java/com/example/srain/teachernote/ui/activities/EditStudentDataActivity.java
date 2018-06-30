@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.activities;
+package com.example.srain.teachernote.ui.activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;

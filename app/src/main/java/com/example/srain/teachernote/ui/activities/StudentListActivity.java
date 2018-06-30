@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.activities;
+package com.example.srain.teachernote.ui.activities;
 
 import android.support.v4.app.FragmentManager;
 import android.content.Intent;
@@ -14,12 +14,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.adapters.StudentListAdapter;
+import com.example.srain.teachernote.ui.adapters.StudentListAdapter;
 import com.example.srain.teachernote.entity.ExperimentClassStudentList;
 import com.example.srain.teachernote.entity.Student;
 import com.example.srain.teachernote.entity.TeachClassStudentList;
-import com.example.srain.teachernote.fragments.AddStudentListDialogFragment;
-import com.example.srain.teachernote.fragments.SamplePromptDialogFragment;
+import com.example.srain.teachernote.ui.fragments.AddStudentListDialogFragment;
+import com.example.srain.teachernote.ui.fragments.SamplePromptDialogFragment;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;

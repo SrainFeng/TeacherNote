@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.activities;
+package com.example.srain.teachernote.ui.activities;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
@@ -13,8 +13,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.adapters.ExperimentClassAdapter;
-import com.example.srain.teachernote.adapters.TeachClassAdapter;
+import com.example.srain.teachernote.ui.adapters.ExperimentClassAdapter;
+import com.example.srain.teachernote.ui.adapters.TeachClassAdapter;
 import com.example.srain.teachernote.entity.ExperimentClass;
 import com.example.srain.teachernote.entity.ExperimentClassStudentList;
 import com.example.srain.teachernote.entity.Student;

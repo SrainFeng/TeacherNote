@@ -1,20 +1,20 @@
-package com.example.srain.teachernote.activities;
+package com.example.srain.teachernote.ui.activities;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
-import com.ashokvarma.bottomnavigation.TextBadgeItem;
-import com.example.srain.teachernote.adapters.FragmentAdapter;
-import com.example.srain.teachernote.fragments.ExperimentClassListFragment;
+import com.example.srain.teachernote.ui.adapters.FragmentAdapter;
+import com.example.srain.teachernote.ui.fragments.ExperimentClassListFragment;
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.fragments.TeachClassListFragment;
-import com.example.srain.teachernote.fragments.UserFragment;
+import com.example.srain.teachernote.ui.fragments.TeachClassListFragment;
+import com.example.srain.teachernote.ui.fragments.UserFragment;
 
 import org.litepal.tablemanager.Connector;
 
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private List<Fragment> mFragmentList = new ArrayList<>();
 
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -54,6 +55,15 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         mBottomBar = findViewById(R.id.bottom_bar);
         viewPager = findViewById(R.id.view_pager);
+        toolbar = findViewById(R.id.main_toolbar);
+
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.home);
+        }
 
         initFragmentList();
 
@@ -61,15 +71,9 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         BottomNavigationItem labButton = new BottomNavigationItem(R.mipmap.ic_folder, "实验班");
         BottomNavigationItem userButton = new BottomNavigationItem(R.mipmap.ic_user, "用户");
 
-        TextBadgeItem numberBadgeItem = new TextBadgeItem();
-        numberBadgeItem.setText("5")
-                .setBackgroundColor("#ea3f3f")
-                .setTextColor("#ecdcff")
-                .setAnimationDuration(100)
-                .setHideOnSelect(true);
         mBottomBar
                 .addItem(classButton)
-                .addItem(labButton.setBadgeItem(numberBadgeItem))
+                .addItem(labButton)
                 .addItem(userButton)
                 .setFirstSelectedPosition(0)
                 .initialise();
@@ -91,11 +95,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             }
         });
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        }
 
         mFragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), mFragmentList);
 
@@ -128,4 +127,5 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onPageScrollStateChanged(int state) {
 
     }
+
 }

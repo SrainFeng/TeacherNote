@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.activities;
+package com.example.srain.teachernote.ui.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,18 +8,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.adapters.ExperimentStudentListAdapter;
-import com.example.srain.teachernote.entity.ExperimentClassStudentList;
+import com.example.srain.teachernote.ui.adapters.TeachStudentListAdapter;
 import com.example.srain.teachernote.entity.Student;
-import com.example.srain.teachernote.fragments.AddStudentListDialogFragment;
-import com.example.srain.teachernote.fragments.ReviseScoreDialogFragment;
-import com.example.srain.teachernote.fragments.SamplePromptDialogFragment;
+import com.example.srain.teachernote.entity.TeachClassStudentList;
+import com.example.srain.teachernote.ui.fragments.AddStudentListDialogFragment;
+import com.example.srain.teachernote.ui.fragments.ReviseScoreDialogFragment;
+import com.example.srain.teachernote.ui.fragments.SamplePromptDialogFragment;
 import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -36,7 +37,7 @@ import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public class ExperimentStudentListActivity extends AppCompatActivity implements AddStudentListDialogFragment.LoginInputListener, SamplePromptDialogFragment.SampleInputListener, ReviseScoreDialogFragment.LoginInputListener{
+public class TeachStudentListActivity extends AppCompatActivity implements AddStudentListDialogFragment.LoginInputListener, SamplePromptDialogFragment.SampleInputListener, ReviseScoreDialogFragment.LoginInputListener{
 
     private SwipeMenuRecyclerView studentSwipeRecyclerView;
 
@@ -48,24 +49,23 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
 
     private List<Integer> studentIdList = new ArrayList<>();
 
-    private List<ExperimentClassStudentList> studentLists;
+    private List<TeachClassStudentList> studentLists;
 
-    private ExperimentStudentListAdapter adapter;
+    private TeachStudentListAdapter adapter;
 
     private int position;
 
-
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_experiment_student_list);
+        setContentView(R.layout.activity_teach_student_list);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         classId = intent.getIntExtra("class_id", -1);
 
-        studentSwipeRecyclerView = findViewById(R.id.experiment_swipe_menu_recycler_view);
+        studentSwipeRecyclerView = findViewById(R.id.swipe_menu_recycler_view);
 
-        studentListToolbar = findViewById(R.id.experiment_student_list_toolbar);
+        studentListToolbar = findViewById(R.id.student_list_toolbar);
         setSupportActionBar(studentListToolbar);
 
         ActionBar actionBar = getSupportActionBar();
@@ -74,17 +74,18 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
             actionBar.setHomeAsUpIndicator(R.drawable.back);
         }
 
+        // 查找出该课程的所有学生的 id
         findStudentId();
         initList();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         studentSwipeRecyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new ExperimentStudentListAdapter(studentList, classId);
+        adapter = new TeachStudentListAdapter(studentList, classId);
 
-        SwipeMenuCreator mSwipeMenuCreator = new SwipeMenuCreator() {
+        SwipeMenuCreator mSwipeMenuCreator= new SwipeMenuCreator() {
             @Override
             public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
-                SwipeMenuItem deleteItem = new SwipeMenuItem(ExperimentStudentListActivity.this);
+                SwipeMenuItem deleteItem = new SwipeMenuItem(TeachStudentListActivity.this);
                 deleteItem.setBackgroundColor(Color.RED)
                         .setText("删除")
                         .setTextColor(Color.WHITE)
@@ -93,7 +94,7 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
                         .setHeight(MATCH_PARENT);
                 swipeRightMenu.addMenuItem(deleteItem);
 
-                SwipeMenuItem reviseItem = new SwipeMenuItem(ExperimentStudentListActivity.this);
+                SwipeMenuItem reviseItem = new SwipeMenuItem(TeachStudentListActivity.this);
                 reviseItem.setBackgroundColor(Color.BLUE)
                         .setText("修改")
                         .setTextColor(Color.WHITE)
@@ -101,24 +102,26 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
                         .setWidth(300)
                         .setHeight(MATCH_PARENT);
                 swipeRightMenu.addMenuItem(reviseItem);
+
             }
         };
 
         studentSwipeRecyclerView.setSwipeMenuCreator(mSwipeMenuCreator);
 
+        // 侧滑菜单中点击事件
         studentSwipeRecyclerView.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
             @Override
             public void onItemClick(SwipeMenuBridge menuBridge) {
                 menuBridge.closeMenu();
-                position = menuBridge.getAdapterPosition();
                 int menuPosition = menuBridge.getPosition();
+                position = menuBridge.getAdapterPosition();
                 switch (menuPosition) {
                     case 0:
-                        SamplePromptDialogFragment.setSampleInputListener(ExperimentStudentListActivity.this);
+                        SamplePromptDialogFragment.setSampleInputListener(TeachStudentListActivity.this);
                         showSampleDialog();
                         break;
                     case 1:
-                        ReviseScoreDialogFragment.setListener(ExperimentStudentListActivity.this);
+                        ReviseScoreDialogFragment.setListener(TeachStudentListActivity.this);
                         showScoreDialog();
                         break;
                     default:
@@ -127,10 +130,11 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
             }
         });
 
+        // 列表项点击事件
         studentSwipeRecyclerView.setSwipeItemClickListener(new SwipeItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                Intent showStudentDataIntent = new Intent(ExperimentStudentListActivity.this, StudentDataActivity.class);
+                Intent showStudentDataIntent = new Intent(TeachStudentListActivity.this, StudentDataActivity.class);
                 Student student = studentList.get(position);
                 showStudentDataIntent.putExtra("student_id", student.getId());
                 startActivity(showStudentDataIntent);
@@ -149,16 +153,20 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
         adapter.notifyDataSetChanged();
     }
 
-    private void findStudentId() {
-        studentLists = LitePal.where("classId = ?", classId + "")
-                .find(ExperimentClassStudentList.class);
+    private void findStudentId(){
+        studentLists = LitePal.where("classId = ?", classId + "").find(TeachClassStudentList.class);
         if (!studentLists.isEmpty()) {
-            for (ExperimentClassStudentList experimentClassStudentList:studentLists) {
-                studentIdList.add(experimentClassStudentList.getStudentId());
+            for (TeachClassStudentList teachClassStudentList:studentLists) {
+                studentIdList.add(teachClassStudentList.getStudentId());
+
+                Log.d("ListActivity",  "classId: " + classId + "studentId: " + teachClassStudentList.getStudentId());
             }
         }
     }
 
+    /**
+     * 初始化列表该科包含的学生列表
+     */
     private void initList() {
         studentList.clear();
         for (int id:studentIdList) {
@@ -188,16 +196,17 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
         return true;
     }
 
-    private void showAddStudentDialog() {
+    private void showAddStudentDialog(){
         AddStudentListDialogFragment addStudentListDialogFragment = AddStudentListDialogFragment.addDialogFragmentCreator();
         FragmentManager fragmentManager = getSupportFragmentManager();
         addStudentListDialogFragment.show(fragmentManager, "addStudentDialog");
     }
 
-    private void showSampleDialog() {
+    private void showSampleDialog(){
         SamplePromptDialogFragment samplePromptDialogFragment = SamplePromptDialogFragment.samplePromptDialogCreator("是否从这门课中删除该学生？");
         FragmentManager fragmentManager = getSupportFragmentManager();
         samplePromptDialogFragment.show(fragmentManager, "alertDialog");
+
     }
 
     private void showScoreDialog(){
@@ -208,20 +217,21 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
 
     @Override
     public void onLogInputComplete(String addName, String addNumber, String addScore) {
-        ExperimentClassStudentList experimentClassStudentList;
+        TeachClassStudentList teachClassStudentList;
         boolean isExist = false;
         // 判断列表中是否有该学生，或输入的学号已存在
         for (Student item:studentList){
             if (item.getStudentNumber().equals(addNumber)) {
                 isExist = true;
+                Log.d("ListActivity", isExist + "");
                 break;
             }
         }
         if (!isExist){
             // 不存在，则添加
-            experimentClassStudentList = new ExperimentClassStudentList();
-            experimentClassStudentList.setClassId(classId);
-            experimentClassStudentList.setScore(Float.parseFloat(addScore));
+            teachClassStudentList = new TeachClassStudentList();
+            teachClassStudentList.setClassId(classId);
+            teachClassStudentList.setScore(Float.parseFloat(addScore));
 
             List<Student> students = LitePal.where("studentNumber = ?", addNumber).find(Student.class);
             // 判断数据库中是否已经存在该学生，通过学号判断，学号相同即认为是同一个人
@@ -231,19 +241,20 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
                 student.setStudentNumber(addNumber);
                 student.setName(addName);
                 student.save();
-                experimentClassStudentList.setStudentId(student.getId());
+                teachClassStudentList.setStudentId(student.getId());
                 studentIdList.add(student.getId());
                 Toast.makeText(this,"该学生无记录，已成功添加！", Toast.LENGTH_SHORT).show();
             } else {
                 // 存在，直接取出
                 Student student = students.get(0);
-                experimentClassStudentList.setStudentId(student.getId());
+                teachClassStudentList.setStudentId(student.getId());
                 studentIdList.add(student.getId());
             }
-            experimentClassStudentList.save();
+            teachClassStudentList.save();
 
             initList();
             adapter.notifyDataSetChanged();
+            Log.d("ListActivity", "name:"+addName+" num:"+addNumber);
         } else {
             Toast.makeText(this,"该学生号已存在！", Toast.LENGTH_SHORT).show();
         }
@@ -263,24 +274,24 @@ public class ExperimentStudentListActivity extends AppCompatActivity implements 
             if (studentLists.get(i).getStudentId() == studentId){
                 listId = studentLists.get(i).getId();
                 studentLists.remove(i);
-                LitePal.delete(ExperimentClassStudentList.class, listId);
+                LitePal.delete(TeachClassStudentList.class, listId);
             }
         }
         initList();
         adapter.notifyDataSetChanged();
-        Toast.makeText(ExperimentStudentListActivity.this, "已成功删除！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(TeachStudentListActivity.this, "已成功删除！", Toast.LENGTH_SHORT).show();
         position = -1;
     }
 
     @Override
     public void onLogInputComplete(String newScore) {
-        List<ExperimentClassStudentList> experimentClassStudentLists = LitePal
+        List<TeachClassStudentList> teachClassStudentLists = LitePal
                 .where("classId = ? and studentId = ?", classId + "", studentList.get(position).getId() + "")
-                .find(ExperimentClassStudentList.class);
-        if (experimentClassStudentLists.size() == 1){
-            ExperimentClassStudentList experimentClassStudentList = experimentClassStudentLists.get(0);
-            experimentClassStudentList.setScore(Float.parseFloat(newScore));
-            experimentClassStudentList.update(experimentClassStudentList.getId());
+                .find(TeachClassStudentList.class);
+        if (teachClassStudentLists.size() == 1){
+            TeachClassStudentList teachClassStudentList = teachClassStudentLists.get(0);
+            teachClassStudentList.setScore(Float.parseFloat(newScore));
+            teachClassStudentList.update(teachClassStudentList.getId());
             initList();
             adapter.notifyDataSetChanged();
         } else {

@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.fragments;
+package com.example.srain.teachernote.ui.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.widget.LinearLayout;
 
 import com.example.srain.teachernote.MyApplication;
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.activities.StudentListActivity;
+import com.example.srain.teachernote.ui.activities.StudentListActivity;
 
 /**
  * Project: TeacherNote
@@ -29,34 +29,18 @@ import com.example.srain.teachernote.activities.StudentListActivity;
  */
 public class UserFragment extends Fragment implements View.OnClickListener{
 
-    private Toolbar toolbar;
-
     private LinearLayout studentList;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.user_fragment_layout, container, false);
-        toolbar = view.findViewById(R.id.user_fragment_toolbar);
 
-        setHasOptionsMenu(true);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-
+        Toolbar toolbar = getActivity().findViewById(R.id.main_toolbar);
+        toolbar.getMenu().clear();
         studentList = view.findViewById(R.id.student_list_l);
         studentList.setOnClickListener(this);
 
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.home);
-        }
-
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.toolbar, menu);
     }
 
     @Override

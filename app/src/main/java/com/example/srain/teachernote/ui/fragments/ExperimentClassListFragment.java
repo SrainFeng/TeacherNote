@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.fragments;
+package com.example.srain.teachernote.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.adapters.ExperimentClassAdapter;
+import com.example.srain.teachernote.ui.adapters.ExperimentClassAdapter;
 import com.example.srain.teachernote.entity.Experiment;
 import com.example.srain.teachernote.entity.ExperimentClass;
 import com.example.srain.teachernote.entity.ExperimentClassStudentList;
@@ -40,17 +40,20 @@ public class ExperimentClassListFragment extends Fragment implements AddClassDia
 
     private List<ExperimentClass> mExperimentClassList = new ArrayList<>();
 
-    private Toolbar toolbar;
-
     ExperimentClassAdapter adapter;
+    
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.experiment_class_list,container,false);
-        toolbar = view.findViewById(R.id.experiment_class_toolbar);
-        setHasOptionsMenu(true);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+
         initList();
         RecyclerView experimentRecyclerView = view.findViewById(R.id.experiment_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -58,11 +61,6 @@ public class ExperimentClassListFragment extends Fragment implements AddClassDia
         adapter = new ExperimentClassAdapter(mExperimentClassList);
         experimentRecyclerView.setAdapter(adapter);
 
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.home);
-        }
         return view;
     }
 
@@ -81,9 +79,11 @@ public class ExperimentClassListFragment extends Fragment implements AddClassDia
         
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.class_toolbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -126,13 +126,24 @@ public class ExperimentClassListFragment extends Fragment implements AddClassDia
 
     @Override
     public void onLogInputComplete(String addClassName, String addClassCode) {
-        Toast.makeText(getActivity(), "name: " + addClassName + " code:" + addClassCode, Toast.LENGTH_SHORT).show();
-        ExperimentClass experimentClass = new ExperimentClass();
-        experimentClass.setName(addClassName);
-        experimentClass.setClassCode(addClassCode);
-        experimentClass.save();
-        initList();
-        adapter.notifyDataSetChanged();
+
+        boolean isExist = false;
+        for (ExperimentClass item:mExperimentClassList) {
+            if (item.getClassCode().equals(addClassCode)) {
+                isExist = true;
+                break;
+            }
+        }
+        if (!isExist) {
+            ExperimentClass experimentClass = new ExperimentClass();
+            experimentClass.setName(addClassName);
+            experimentClass.setClassCode(addClassCode);
+            experimentClass.save();
+            initList();
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getActivity(), "添加失败，课程编码已存在！", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

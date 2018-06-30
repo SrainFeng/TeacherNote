@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.fragments;
+package com.example.srain.teachernote.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.adapters.TeachClassAdapter;
+import com.example.srain.teachernote.ui.adapters.TeachClassAdapter;
 import com.example.srain.teachernote.entity.TeachClass;
 import com.example.srain.teachernote.entity.TeachClassStudentList;
 
@@ -39,17 +39,20 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
 
     private List<TeachClass> mClassList = new ArrayList<>();
 
-    private Toolbar toolbar;
-
     TeachClassAdapter adapter;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.teach_class_list,container,false);
-        toolbar = view.findViewById(R.id.teach_class_toolbar);
-        setHasOptionsMenu(true);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+
         initList();
         RecyclerView teachClassRecyclerView = view.findViewById(R.id.teach_class_recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -57,11 +60,6 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
         adapter = new TeachClassAdapter(mClassList);
         teachClassRecyclerView.setAdapter(adapter);
 
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.home);
-        }
         return view;
     }
 
@@ -78,9 +76,11 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
         mClassList.addAll(teachClasses);
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.class_toolbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -123,12 +123,23 @@ public class TeachClassListFragment extends Fragment implements AddClassDialogFr
     @Override
     public void onLogInputComplete(String addClassName, String addClassCode) {
         Toast.makeText(getActivity(), "name: " + addClassName + " code:" + addClassCode, Toast.LENGTH_SHORT).show();
-        TeachClass teachClass = new TeachClass();
-        teachClass.setName(addClassName);
-        teachClass.setClassCode(addClassCode);
-        teachClass.save();
-        initList();
-        adapter.notifyDataSetChanged();
+        boolean isExist = false;
+        for (TeachClass item:mClassList) {
+            if (item.getClassCode().equals(addClassCode)){
+                isExist = true;
+                break;
+            }
+        }
+        if (!isExist) {
+            TeachClass teachClass = new TeachClass();
+            teachClass.setName(addClassName);
+            teachClass.setClassCode(addClassCode);
+            teachClass.save();
+            initList();
+            adapter.notifyDataSetChanged();
+        } else {
+            Toast.makeText(getActivity(), "添加失败，课程编码已存在！", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.adapters;
+package com.example.srain.teachernote.ui.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

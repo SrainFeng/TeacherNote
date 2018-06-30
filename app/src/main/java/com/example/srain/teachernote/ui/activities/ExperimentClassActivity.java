@@ -1,4 +1,4 @@
-package com.example.srain.teachernote.activities;
+package com.example.srain.teachernote.ui.activities;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
@@ -17,19 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.srain.teachernote.R;
-import com.example.srain.teachernote.adapters.ExperimentAdapter;
+import com.example.srain.teachernote.ui.adapters.ExperimentAdapter;
 import com.example.srain.teachernote.entity.Experiment;
 import com.example.srain.teachernote.entity.ExperimentClass;
 import com.example.srain.teachernote.entity.ExperimentList;
-import com.example.srain.teachernote.fragments.AddClassDialogFragment;
-import com.example.srain.teachernote.fragments.DeleteItemDialogFragment;
+import com.example.srain.teachernote.ui.fragments.AddClassDialogFragment;
+import com.example.srain.teachernote.ui.fragments.DeleteItemDialogFragment;
 
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExperimentClassActivity extends AppCompatActivity implements AddClassDialogFragment.LoginInputListener, DeleteItemDialogFragment.LoginInputListener{
+public class ExperimentClassActivity extends AppCompatActivity implements AddClassDialogFragment.LoginInputListener, DeleteItemDialogFragment.LoginInputListener {
 
     private Toolbar toolbar;
 
